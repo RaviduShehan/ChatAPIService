@@ -1,7 +1,7 @@
-FROM python:3.12.0a7-alpine3.17
-WORKDIR /chatapiapp
+FROM python:buster
+WORKDIR /ChatApp
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY Src Src
+COPY src src
 EXPOSE 5001
-ENTRYPOINT ["python", "./Src/chat.py"]
+ENTRYPOINT ["python", "./src/chat.py"]
