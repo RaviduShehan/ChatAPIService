@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, jsonify
 import openai
 
@@ -5,7 +7,7 @@ app = Flask(__name__)
 
 # Load OpenAI API key
 # secrets = openai_secret_manager.get_secret("openai", path="config/secrets.json") secrets["api_key"]
-openai.api_key = "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"
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 @app.route('/chat')
 def chat():
