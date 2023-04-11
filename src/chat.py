@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Load OpenAI API key
 # secrets = openai_secret_manager.get_secret("openai", path="config/secrets.json") secrets["api_key"]
-openai.api_key = "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"
+openai.api_key = "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"
 
 @app.route('/chat')
 def chat():
