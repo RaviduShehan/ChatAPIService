@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: chatapi_prod
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: chatapi_prod
+  strategry:
+    type: RollinUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: chatapi_prod
+    spec:
+      containers:
+      - name: chatapi
+        image: shehan97105/chatapiservice:latest
+        ports:
+        - containerPort: 5001
+
