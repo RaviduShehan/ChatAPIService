@@ -5,22 +5,19 @@ pipeline {
         dockerImage = null
     }
     stages {
-        stage('Deploy to Kubernetes') {
+        stage('Deploy to Dev Enviornement') {
             steps {
                 script {
-                    def branchName = env.BRANCH_NAME
-                    if (branchName == 'master') {
-                        sh 'echo "Deploying to Production Environment"'
-                        kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId: 'kubernetesconfigpwd')
-                    } else if (branchName == 'Dev/Chatservice') {
-                        sh 'echo "Deploying to Development Environment"'
-                        kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd')
-                    } else {
-                        error "Unknown branch name: ${branchName}"
+                     kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd')
                     }
-
                 }
             }
-        }
-    }
+        stage('Deploy to Prod Enviornement') {
+            steps {
+                script {
+                     kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId: 'kubernetesconfigpwd')
+                    }
+                }
+            }
+     }
 }
