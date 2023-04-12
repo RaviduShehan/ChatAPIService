@@ -5,7 +5,7 @@ import openai
 
 app = Flask(__name__)
 
-# Load OpenAI API key to API edit
+# Load OpenAI API key to API editrfg
 # secrets = openai_secret_manager.get_secret("openai", path="config/secrets.json") secrets["api_key"]
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
