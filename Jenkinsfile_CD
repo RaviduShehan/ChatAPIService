@@ -13,7 +13,6 @@ pipeline {
                         sh 'echo "Deploying to Production Environment"'
                         kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId: 'kubernetesconfigpwd')
                     } else if (branchName == 'Dev/Chatservice') {
-                        namespace = 'dev'
                         sh 'echo "Deploying to Development Environment"'
                         kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd')
                     } else {
