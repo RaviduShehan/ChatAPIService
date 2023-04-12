@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: chatapi-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chatapi-test
+  template:
+    metadata:
+      labels:
+        app: chatapi-test
+    spec:
+      containers:
+      - name: chatapi-test
+        image: shehan97105/chatapiservice:latest
+        ports:
+        - containerPort: 5001

@@ -12,6 +12,13 @@ pipeline {
                         }
                     }
                 }
+        stage('Deploy to Test Enviornment') {
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chattest.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
+                }
+        }
         stage('Deploy to Prod Enviornment') {
                 steps {
                     script {
