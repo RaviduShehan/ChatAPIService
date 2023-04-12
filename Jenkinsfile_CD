@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy to Prod Enviornment') {
                 steps {
                     script {
-                         kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId:'kubernetesconfigpwd')
+                         kubernetesDeploy(configs: 'chatprod.yml', kubeconfigId:'kubernetesconfigpwd')
                         }
                     }
         }

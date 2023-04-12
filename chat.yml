@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: chatapi_dev
+   name: chatapi-dev
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: chatapi_dev
+      app: chatapi-dev
   template:
     metadata:
       labels:
-        app: chatapi_dev
+        app: chatapi-dev
     spec:
       containers:
-      - name: chatapi_dev
+      - name: chatapi-dev
         image: shehan97105/chatapiservice:latest
         ports:
         - containerPort: 5001

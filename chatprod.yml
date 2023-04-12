@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: chatapi_prod
+   name: chatapi-prod
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: chatapi_prod
+      app: chatapi-prod
   strategry:
     type: RollingUpdate
     rollingUpdate:
@@ -15,10 +15,10 @@ spec:
   template:
     metadata:
       labels:
-        app: chatapi_prod
+        app: chatapi-prod
     spec:
       containers:
-      - name: chatapi
+      - name: chatapi-prod
         image: shehan97105/chatapiservice:latest
         ports:
         - containerPort: 5001
