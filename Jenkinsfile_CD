@@ -4,20 +4,20 @@ pipeline {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
     }
-    stages {
+    stages{
         stage('Deploy to Dev Enviornment') {
-            steps {
-                script {
-                     kubernetesDeploy(configs: 'chat.yml', kubeconfigId: 'kubernetesconfigpwd')
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chat.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
                     }
                 }
-            }
         stage('Deploy to Prod Enviornment') {
-            steps {
-                script {
-                     kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId: 'kubernetesconfigpwd')
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
                     }
-                }
-            }
-     }
+        }
+    }
 }
