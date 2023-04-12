@@ -39,7 +39,7 @@ pipeline {
         stage('Trigger CD Pipeline') {
             steps {
                 script {
-                    build job: 'CD_Pipeline', parameters: [
+                    build job: 'CD-ChatService', parameters: [
                         string(name: 'DOCKER_IMAGE_NAME', value: dockerImageName),
                         string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd')
                     ]
