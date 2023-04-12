@@ -36,13 +36,15 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
+        stage('Trigger CD Pipeline') {
             steps {
                 script {
-                    kubernetesDeploy(configs: 'chat.yml', kubeconfigId: 'kubernetesconfigpwd')
+                    build job: 'CD_Pipeline', parameters: [
+                        string(name: 'DOCKER_IMAGE_NAME', value: dockerImageName),
+                        string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd')
+                    ]
                 }
             }
         }
     }
 }
-
