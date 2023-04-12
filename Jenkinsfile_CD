@@ -5,14 +5,14 @@ pipeline {
         dockerImage = null
     }
     stages {
-        stage('Deploy to Dev Enviornement') {
+        stage('Deploy to Dev Enviornment') {
             steps {
                 script {
-                     kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd')
+                     kubernetesDeploy(configs: 'chat.yml', kubeconfigId: 'kubernetesconfigpwd')
                     }
                 }
             }
-        stage('Deploy to Prod Enviornement') {
+        stage('Deploy to Prod Enviornment') {
             steps {
                 script {
                      kubernetesDeploy(configs: 'chat_prod.yml', kubeconfigId: 'kubernetesconfigpwd')
