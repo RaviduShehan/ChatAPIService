@@ -29,13 +29,6 @@ pipeline {
                 }
             }
         }
-        stage('Run Docker Image') {
-            steps {
-                script {
-                    dockerImage.run("-p 5001:5001")
-                }
-            }
-        }
         stage('Trigger CD Pipeline') {
             steps {
                 script {
