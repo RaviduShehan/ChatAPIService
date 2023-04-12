@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: chatapi_prod
   strategry:
-    type: RollinUpdate
+    type: RollingUpdate
     rollingUpdate:
       maxSurge: 2
       maxUnavailable: 1
