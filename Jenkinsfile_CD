@@ -15,7 +15,7 @@ pipeline {
                     } else if (branchName == 'Dev/Chatservice') {
                         namespace = 'dev'
                         sh 'echo "Deploying to Development Environment"'
-                        kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd'
+                        kubernetesDeploy(configs: 'chat_dev.yml', kubeconfigId: 'kubernetesconfigpwd')
                     } else {
                         error "Unknown branch name: ${branchName}"
                     }
