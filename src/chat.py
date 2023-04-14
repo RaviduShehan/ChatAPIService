@@ -5,7 +5,7 @@ import openai
 
 app = Flask(__name__)
 
-# Load OpenAI API key to API
+# Load OpenAI API key to API editrfg
 # secrets = openai_secret_manager.get_secret("openai", path="config/secrets.json") secrets["api_key"]
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
@@ -31,3 +31,4 @@ def chat():
 
 # if __name__ == '__main__':
 #     app.run(debug=True, host='0.0.0.0', port=5001)
+
