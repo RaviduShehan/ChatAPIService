@@ -17,7 +17,7 @@ mydb = mysql.connector.connect(
   password="971051213vGOT@",
   database="rapalk"
 )
-timestamp = datetime.now()
+
 mycursor = mydb.cursor()
 
 @app.route('/chat')
@@ -26,7 +26,7 @@ def chat():
     prompt = request.args.get('prompt')
     if not prompt:
         sql = "INSERT INTO api_service(service_name, status, executed_time) VALUES (%s, %s,%s)"
-        val = ("chatAPI", "Error", timestamp)
+        val = ("chatAPI", "Error: Prompt parameter is missing", datetime.now())
         mycursor.execute(sql, val)
         mydb.commit()
         return jsonify(error="Prompt parameter is missing"), 400
@@ -42,14 +42,14 @@ def chat():
         )
         # Store service status in database
         sql = "INSERT INTO api_service(service_name, status, executed_time) VALUES (%s, %s,%s)"
-        val = ("chatAPI", "Success", timestamp)
+        val = ("chatAPI", "Success", datetime.now())
         mycursor.execute(sql, val)
         mydb.commit()
         return jsonify(response=response.choices[0].text.strip())
     except Exception as e:
 
         sql = "INSERT INTO api_service(service_name, status, executed_time) VALUES (%s, %s,%s)"
-        val = ("chatAPI", "Error", timestamp)
+        val = ("chatAPI", "Error: Server error", datetime.now())
         mycursor.execute(sql, val)
         mydb.commit()
         return jsonify(error=str(e)), 500
