@@ -10,6 +10,7 @@ ENV DB_HOST="127.0.0.1"
 ENV DB_NAME="rapalk"
 ENV DB_USER="rapalk"
 ENV DB_PASSWORD="971051213vGOT@"
+ENV DB_PORT=3306
 # Install mysql client
 RUN apt-get update && apt-get install -y default-mysql-client
 
