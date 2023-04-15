@@ -15,8 +15,7 @@ ENV DB_PASSWORD="971051213vGOT@"
 ENV DB_PORT="3306"
 
 # Install mysql server
-RUN apt-get update && \
-    apt-get install -y mysql-server && \
+RUN pip install -y mysql-server && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy init.sql script to initialize the database
