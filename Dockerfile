@@ -9,3 +9,6 @@ ENV DB_NAME="rapalk"
 ENV DB_USER="rapalk"
 ENV DB_PASSWORD="971051213vGOT@"
 RUN pip install mysql-connector-python
+
+EXPOSE 5001
+ENTRYPOINT ["python", "./src/chat.py"]
