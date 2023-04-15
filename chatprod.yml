@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,5 +35,13 @@ spec:
         image: shehan97105/chatapiservice:latest
         ports:
         - containerPort: 5001
-
+        env:
+          - name: DB_HOST
+            value: 127.0.0.1
+          - name: DB_NAME
+            value: rapalk
+          - name: DB_USER
+            value: rapalk
+          - name: DB_PASSWORD
+            value: 971051213vGOT@
 
