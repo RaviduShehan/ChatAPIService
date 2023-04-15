@@ -5,6 +5,11 @@ pipeline {
         dockerImage = null
     }
     stages{
+        stage('Create Config Map') {
+            steps {
+                sh 'kubectl create configmap init-sql-configmap --from-file=init.sql'
+            }
+        }
         stage('Deploy to Dev Enviornment') {
                 steps {
                     script {
