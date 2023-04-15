@@ -37,7 +37,7 @@ spec:
         - containerPort: 5001
         env:
           - name: DB_HOST
-            value: 127.0.0.1
+            value: mysql
           - name: DB_NAME
             value: rapalk
           - name: DB_USER
