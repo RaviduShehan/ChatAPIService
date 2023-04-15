@@ -8,6 +8,7 @@ pipeline {
         stage('Deploy to Dev Enviornment') {
                 steps {
                     script {
+                         kubernetesDeploy(configs: 'chatservice.yml', kubeconfigId:'kubernetesconfigpwd')
                          kubernetesDeploy(configs: 'chat.yml', kubeconfigId:'kubernetesconfigpwd')
                         }
                     }
@@ -15,6 +16,7 @@ pipeline {
         stage('Deploy to Test Enviornment') {
                 steps {
                     script {
+                         kubernetesDeploy(configs: 'chatservice.yml', kubeconfigId:'kubernetesconfigpwd')
                          kubernetesDeploy(configs: 'chattest.yml', kubeconfigId:'kubernetesconfigpwd')
                         }
                 }
@@ -22,6 +24,7 @@ pipeline {
         stage('Deploy to Prod Enviornment') {
                 steps {
                     script {
+                         kubernetesDeploy(configs: 'chatservice.yml', kubeconfigId:'kubernetesconfigpwd')
                          kubernetesDeploy(configs: 'chatprod.yml', kubeconfigId:'kubernetesconfigpwd')
                         }
                     }
