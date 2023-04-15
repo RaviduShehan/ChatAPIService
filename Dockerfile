@@ -6,7 +6,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY src src
 # Set environment variables for database connection
-ENV DB_HOST="mysql"
+ENV DB_HOST="localhost"
 ENV DB_NAME="rapalk"
 ENV DB_USER="rapalk"
 ENV DB_PASSWORD="971051213vGOT@"
