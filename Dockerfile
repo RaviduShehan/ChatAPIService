@@ -1,14 +1,13 @@
 FROM python:buster
 WORKDIR /ChatApp
 COPY requirements.txt .
+COPY src/serviceAccountKey.json .
 RUN pip install -r requirements.txt
+
 COPY src src
-# Set environment variables for database connection
-ENV DB_HOST="127.0.0.1"
-ENV DB_NAME="rapalk"
-ENV DB_USER="rapalk"
-ENV DB_PASSWORD="971051213vGOT@"
-RUN pip install mysql-connector-python
+# Set environment variables for Firestore connection
+ENV GOOGLE_APPLICATION_CREDENTIALS="./serviceAccountKey.json"
+RUN pip install google-cloud-firestore
 
 EXPOSE 5001
 ENTRYPOINT ["python", "./src/chat.py"]
