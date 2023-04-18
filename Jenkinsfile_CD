@@ -1,3 +1,5 @@
+import com.google.jenkins.plugins.deploy.steps.KubernetesEngineDeployStep
+
 pipeline {
     agent any
     environment {
@@ -11,32 +13,45 @@ pipeline {
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
-                    container('google-cloud-sdk') {
-                      sh 'gcloud auth activate-service-account --key-file=openai-gke-service.json'
-                      sh 'gcloud container clusters get-credentials openai-api-services --zone us-central1 --project apiservices-384019'
-                      sh 'kubectl get nodes'
-                      sh 'kubectl config get-contexts'
-                      sh 'kubectl apply -f chat.yml'
-                    }
+                    script {
+                         gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-dev',
+                            containerName: 'chat',
+                            yamlPath: 'chat.yaml'
+                         )
+                        }
                 }
          }
         stage('Deploy to Test Environment') {
                 steps {
-                    container('google-cloud-sdk') {
-                      sh 'gcloud auth activate-service-account --key-file=openai-gke-service.json'
-                      sh 'gcloud container clusters get-credentials openai-api-services --zone us-central1 --project apiservices-384019'
-                      sh 'kubectl apply -f chattest.yml'
-                    }
+                    script {
+                        gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-test',
+                            containerName: 'chat-test',
+                            yamlPath: 'chattest.yaml'
+                         )
+                        }
                 }
         }
         stage('Deploy to Prod Environment') {
                 steps {
-                    container('google-cloud-sdk') {
-                      sh 'gcloud auth activate-service-account --key-file=openai-gke-service.json'
-                      sh 'gcloud container clusters get-credentials openai-api-services --zone us-central1 --project apiservices-384019'
-                      sh 'kubectl apply -f chatprod.yml'
-                    }
+                    script {
+                        gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-prod',
+                            containerName: 'chat-prod',
+                            yamlPath: 'chatprod.yaml'
+                         )
+                        }
+                }
         }
     }
- }
 }
