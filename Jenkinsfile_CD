@@ -8,21 +8,21 @@ pipeline {
         stage('Deploy to Dev Environment') {
             steps {
                 script {
-                    sh "kubectl apply -f chat-dev.yml --kubeconfig=$kubeconfigId"
+                    sh "kubectl apply -f chat.yml --kubeconfig=$kubeconfigId"
                 }
             }
         }
         stage('Deploy to Test Environment') {
             steps {
                 script {
-                    sh "kubectl apply -f chat-test.yml --kubeconfig=$kubeconfigId"
+                    sh "kubectl apply -f chattest.yml --kubeconfig=$kubeconfigId"
                 }
             }
         }
         stage('Deploy to Prod Environment') {
             steps {
                 script {
-                    sh "kubectl apply -f chat-prod.yml --kubeconfig=$kubeconfigId"
+                    sh "kubectl apply -f chatprod.yml --kubeconfig=$kubeconfigId"
                 }
             }
         }
