@@ -5,16 +5,6 @@ pipeline {
         dockerImage = null
     }
     stages{
-         stage('Create Kubernetes Secret') {
-            steps {
-                script {
-                    sh 'echo "secretkey" > openai-api-key.txt'
-                    def createSecretCmd = "kubectl create secret generic openai-api-key --dry-run=client --from-file=./openai-api-key.txt -o yaml"
-                    def secretYaml = sh(returnStdout: true, script: createSecretCmd).trim()
-                    sh "echo '${secretYaml}' | kubectl apply -f -"
-                }
-            }
-         }
         stage('Deploy to Dev Enviornment') {
                 steps {
                     script {
