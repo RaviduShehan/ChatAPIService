@@ -15,14 +15,9 @@ spec:
       containers:
       - name: chatapi-dev
         image: shehan97105/chatapiservice:latest
+        env:
+          - name: OPENAI_API_KEY
+            value: "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"
         ports:
         - containerPort: 5001
-        env:
-          - name: DB_HOST
-            value: mysql
-          - name: DB_NAME
-            value: rapalk
-          - name: DB_USER
-            value: rapalk
-          - name: DB_PASSWORD
-            value: 971051213vGOT@
+
