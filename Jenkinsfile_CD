@@ -6,20 +6,19 @@ pipeline {
 
         gkeClusterName = "openai-api-services"
         gkeZone = "us-central1"
-        gkeCredentialsId = "my-gke-credentials"
+        gkeCredentialsId = "apiservicesauth"
     }
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
                     step([
                         $class: 'KubernetesEngineBuilder',
-                        projectId: apiservices-384019,
+                        projectId: 'apiservices-384019',
                         credentialsId: gkeCredentialsId,
                         clusterName: gkeClusterName,
                         location: gkeZone,
                         manifestPattern: 'chat.yaml',
-                        verifyDeployments: true
-                         ])
+                        verifyDeployments: true])
                         }
                 }
         stage('Deploy to Test Environment') {
