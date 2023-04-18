@@ -27,30 +27,28 @@ pipeline {
                 }
         stage('Deploy to Test Environment') {
                 steps {
-                    script {
-                        gkeDeploy(
-                            credentialsId: gkeCredentialsId,
-                            clusterName: gkeClusterName,
-                            zone: gkeZone,
-                            deployName: 'chat-test',
-                            containerName: 'chat-test',
-                            yamlPath: 'chattest.yaml'
-                         )
-                        }
+                    step([
+                        $class: 'KubernetesEngineBuilder',
+                        projectId: apiservices-384019,
+                        credentialsId: gkeCredentialsId,
+                        clusterName: gkeClusterName,
+                        location: gkeZone,
+                        manifestPattern: 'chattest.yaml',
+                        verifyDeployments: true
+                         )]
                 }
         }
         stage('Deploy to Prod Environment') {
                 steps {
-                    script {
-                        gkeDeploy(
-                            credentialsId: gkeCredentialsId,
-                            clusterName: gkeClusterName,
-                            zone: gkeZone,
-                            deployName: 'chat-prod',
-                            containerName: 'chat-prod',
-                            yamlPath: 'chatprod.yaml'
-                         )
-                        }
+                    step([
+                        $class: 'KubernetesEngineBuilder',
+                        projectId: apiservices-384019,
+                        credentialsId: gkeCredentialsId,
+                        clusterName: gkeClusterName,
+                        location: gkeZone,
+                        manifestPattern: 'chatprod.yaml',
+                        verifyDeployments: true
+                         )]
                 }
         }
     }
