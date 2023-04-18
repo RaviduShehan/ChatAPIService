@@ -16,11 +16,11 @@ spec:
       - name: chatapi-test
         image: shehan97105/chatapiservice:latest
         env:
-          - name: OPENAI_API
+          - name: OPENAI_API_KEY
             valueFrom:
               secretKeyRef:
-                name: openai-secre
-                key: OPENAI_API_KEY
+                name: openai-sc
+                key: openai-sc
         ports:
         - containerPort: 5001
 
