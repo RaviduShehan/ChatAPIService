@@ -14,18 +14,17 @@ pipeline {
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
-                    script {
-                         gkeDeploy(
-                            credentialsId: gkeCredentialsId,
-                            clusterName: gkeClusterName,
-                            zone: gkeZone,
-                            deployName: 'chat-dev',
-                            containerName: 'chat',
-                            yamlPath: 'chat.yaml'
-                         )
+                    step([
+                        $class: 'KubernetesEngineBuilder',
+                        projectId: apiservices-384019,
+                        credentialsId: gkeCredentialsId,
+                        clusterName: gkeClusterName,
+                        location: gkeZone,
+                        manifestPattern: 'chat.yaml',
+                        verifyDeployments: true
+                         )]
                         }
                 }
-         }
         stage('Deploy to Test Environment') {
                 steps {
                     script {
