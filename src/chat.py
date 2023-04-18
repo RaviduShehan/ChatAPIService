@@ -28,7 +28,7 @@ def chat():
     # Save service name, status, and timestamp to Firestore
     service_ref = db.collection('Services').document('ChatService_Status')
     print("Service Started.....")
-    print(os.environ.get('OPENAIAPIKEY'))
+    print(openai.api_key)
     prompt = request.args.get('prompt')
     if not prompt:
         service_ref.update({'status': 'error'})

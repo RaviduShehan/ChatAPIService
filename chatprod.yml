@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: chatapi-prod
-        image: shehan97105/chatapiservice:latest
+        image: shehan97105/chatapiservice:v2
         env:
           - name: OPENAI_API_KEY
             valueFrom:
