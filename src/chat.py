@@ -19,9 +19,9 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__)
 
 # Load OpenAI API key to API
-# openai.api_key = os.environ.get('OPENAI_API_KEY')
-openai.api_key ="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"
-
+openai.api_key = os.environ.get('OPENAI_API_KEY')
+# openai.api_key ="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"
+print(openai.api_key)
 # Initialize Firestore client with explicit project ID
 project_id = "apiservices-384019"
 db = firestore.Client(project=project_id)
