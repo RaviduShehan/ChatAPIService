@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment {
-        dockerImageName = "shehan97105/chatapiservice:v4"
+        COMMIT_SHA=$(git rev-parse HEAD)
+        dockerImageName = "shehan97105/chatapiservice:v5"
         dockerImage = null
     }
     stages {
