@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        dockerImageName = "${params.DOCKER_IMAGE_NAME}"
+        kubeconfigId = "${params.KUBECONFIG_ID}"
+
+        gkeClusterName = "openai-api-cluster"
+        gkeZone = "us-central1-c"
+        gkeCredentialsId = "apiservicesauth"
+    }
+    stages{
+        stage('Deploy to Dev Environment') {
+                steps {
+                    step([
+                        $class: 'KubernetesEngineBuilder',
+                        projectId: 'apiservices-384122',
+                        credentialsId: gkeCredentialsId,
+                        clusterName: gkeClusterName,
+                        location: gkeZone,
+                        manifestPattern: 'chat.yml'])
+                        }
+                }
+    }
+}
+
+
