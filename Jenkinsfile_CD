@@ -3,13 +3,11 @@ pipeline {
     environment {
         dockerImageName = "${params.DOCKER_IMAGE_NAME}"
         kubeconfigId = "${params.KUBECONFIG_ID}"
-        openaiApiKey = "${params.OPENAI_API_KEY}"
     }
     stages{
         stage('Deploy to Dev Environment') {
             steps {
                 script {
-                    sh "sed -i 's|OPENAI_API_KEY|$openaiApiKey|g' chat-dev.yml"
                     sh "kubectl apply -f chat-dev.yml --kubeconfig=$kubeconfigId"
                 }
             }
@@ -17,7 +15,6 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 script {
-                    sh "sed -i 's|OPENAI_API_KEY|$openaiApiKey|g' chat-test.yml"
                     sh "kubectl apply -f chat-test.yml --kubeconfig=$kubeconfigId"
                 }
             }
@@ -25,7 +22,6 @@ pipeline {
         stage('Deploy to Prod Environment') {
             steps {
                 script {
-                    sh "sed -i 's|OPENAI_API_KEY|$openaiApiKey|g' chat-prod.yml"
                     sh "kubectl apply -f chat-prod.yml --kubeconfig=$kubeconfigId"
                 }
             }

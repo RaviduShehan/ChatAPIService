@@ -6,14 +6,6 @@ pipeline {
         openaiApiKey = ""
     }
     stages {
-        stage('Load API Key') {
-            steps {
-                script {
-                    def secret = kubernetes.readSecret('openai-api-key')
-                    openaiApiKey = secret['OPENAI_API_KEY']
-                }
-            }
-        }
         stage('Build') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
