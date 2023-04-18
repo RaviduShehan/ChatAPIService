@@ -3,7 +3,7 @@ pipeline {
     environment {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
-        OPENAI_API_KEY = credentials('openai-api-key')
+        openaiApiKey = credentials('jenkins-secret/openai-api-key')
     }
     stages {
         stage('Build') {
@@ -36,7 +36,7 @@ pipeline {
                     build job: 'CD-ChatService', parameters: [
                         string(name: 'DOCKER_IMAGE_NAME', value: dockerImageName),
                         string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd'),
-                        string(name: 'OPENAI_API_KEY', value: OPENAI_API_KEY)]
+                        string(name: 'OPENAI_API_KEY', value: openaiApiKey)]
                 }
             }
         }

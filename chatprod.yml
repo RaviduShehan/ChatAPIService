@@ -20,6 +20,12 @@ spec:
       containers:
       - name: chatapi-prod
         image: shehan97105/chatapiservice:latest
+        env:
+          - name: OPENAI_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: jenkins-secret
+                key: openai-api-key
         ports:
         - containerPort: 5001
 
