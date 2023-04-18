@@ -3,28 +3,38 @@ pipeline {
     environment {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
+        OPENAI_API_KEY = credentials('openai-api-key')
     }
     stages{
-        stage('Deploy to Dev Enviornment') {
-                steps {
-                    script {
-                         kubernetesDeploy(configs: 'chat.yml', kubeconfigId:'kubernetesconfigpwd')
-                        }
+        stage('Deploy to Dev Environment') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'kubeconfigpwd', variable: 'KUBECONFIG')]) {
+                        sh 'echo "$KUBECONFIG" > kubeconfig.yml'
+                        kubernetesDeploy(configs: 'chat.yml', kubeconfigPath: 'kubeconfig.yml', namespace: 'dev', envVars: [secretKeyRef(key: 'OPENAI_API_KEY', secretName: 'openai-secret', secretKey: 'api_key')])
                     }
                 }
-        stage('Deploy to Test Enviornment') {
-                steps {
-                    script {
-                         kubernetesDeploy(configs: 'chattest.yml', kubeconfigId:'kubernetesconfigpwd')
-                        }
-                }
+            }
         }
-        stage('Deploy to Prod Enviornment') {
-                steps {
-                    script {
-                         kubernetesDeploy(configs: 'chatprod.yml', kubeconfigId:'kubernetesconfigpwd')
-                        }
+        stage('Deploy to Test Environment') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'kubeconfigpwd', variable: 'KUBECONFIG')]) {
+                        sh 'echo "$KUBECONFIG" > kubeconfig.yml'
+                        kubernetesDeploy(configs: 'chattest.yml', kubeconfigPath: 'kubeconfig.yml', namespace: 'test', envVars: [secretKeyRef(key: 'OPENAI_API_KEY', secretName: 'openai-secret', secretKey: 'api_key')])
                     }
+                }
+            }
+        }
+        stage('Deploy to Prod Environment') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'kubeconfigpwd', variable: 'KUBECONFIG')]) {
+                        sh 'echo "$KUBECONFIG" > kubeconfig.yml'
+                        kubernetesDeploy(configs: 'chatprod.yml', kubeconfigPath: 'kubeconfig.yml', namespace: 'prod', envVars: [secretKeyRef(key: 'OPENAI_API_KEY', secretName: 'openai-secret', secretKey: 'api_key')])
+                    }
+                }
+            }
         }
     }
 }
