@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        dockerImageName = "shehan97105/chatapiservice:v5"
+        dockerImageName = "shehan97105/chatapiservice:v6"
         dockerImage = null
     }
     stages {
