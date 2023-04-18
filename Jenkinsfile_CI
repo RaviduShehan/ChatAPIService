@@ -3,17 +3,9 @@ pipeline {
     environment {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
-        openaiApiKey = " "
+        openaiApiKey = credentials('jenkins-secret/openai-api-key')
     }
     stages {
-         stage('Load API Key') {
-            steps {
-                script {
-                    def secret = kubernetes.readSecret('openai-api-key')
-                    openaiApiKey = secret['OPENAI_API_KEY']
-                }
-            }
-        }
         stage('Build') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
@@ -44,7 +36,7 @@ pipeline {
                     build job: 'CD-ChatService', parameters: [
                         string(name: 'DOCKER_IMAGE_NAME', value: dockerImageName),
                         string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd'),
-                        string(name: 'OPENAI_API_KEY', value: openaiApiKey)]
+                        string(name: 'OPENAI_API_KEY', value: OPENAI_API_KEY)]
                 }
             }
         }
