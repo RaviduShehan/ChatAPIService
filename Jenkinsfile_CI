@@ -3,7 +3,7 @@ pipeline {
     environment {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
-        openaiApiKey = credentials('openai-api-key')
+        openaiApiKey = kubernetes.readSecret('openai-api-key')['OPENAI_API_KEY']
     }
     stages {
         stage('Build') {
