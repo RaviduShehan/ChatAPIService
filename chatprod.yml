@@ -21,10 +21,10 @@ spec:
       - name: chatapi-prod
         image: shehan97105/chatapiservice:latest
         env:
-          - name: OPENAI_API_KEY
+          - name: OPENAI_API
             valueFrom:
               secretKeyRef:
-                name: openai-api-keynew
+                name: openai-secre
                 key: OPENAI_API_KEY
         ports:
         - containerPort: 5001
