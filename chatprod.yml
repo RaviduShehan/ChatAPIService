@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
    name: chatapi-prod
+   namespace: prod-env
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: chatapi-prod
@@ -19,7 +20,7 @@ spec:
     spec:
       containers:
       - name: chatapi-prod
-        image: shehan97105/chatapiservice:v1
+        image: shehan97105/chatapiservice:v3
         env:
           - name: OPENAI_API_KEY
             valueFrom:
