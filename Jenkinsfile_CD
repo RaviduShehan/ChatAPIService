@@ -5,6 +5,13 @@ pipeline {
         dockerImage = null
     }
     stages{
+         stage('Create Kubernetes Secret') {
+            steps {
+                sh '''
+                    kubectl create secret generic openai-api-key --from-file=./openai-api-key.txt
+                '''
+            }
+        }
         stage('Deploy to Dev Enviornment') {
                 steps {
                     script {
