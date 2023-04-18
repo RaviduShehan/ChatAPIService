@@ -19,7 +19,8 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__)
 
 # Load OpenAI API key to API
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+# openai.api_key = os.environ.get('OPENAI_API_KEY')
+openai.api_key ="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"
 
 # Initialize Firestore client with explicit project ID
 project_id = "apiservices-384019"
@@ -31,7 +32,6 @@ def chat():
     # Save service name, status, and timestamp to Firestore
     service_ref = db.collection('Services').document('ChatService_Status')
     print("Service Started.....")
-    print(service_ref)
     prompt = request.args.get('prompt')
     if not prompt:
         service_ref.update({'status': 'error'})
