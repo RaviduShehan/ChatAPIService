@@ -3,26 +3,51 @@ pipeline {
     environment {
         dockerImageName = "${params.DOCKER_IMAGE_NAME}"
         kubeconfigId = "${params.KUBECONFIG_ID}"
+
+        gkeClusterName = "openai-api-services"
+        gkeZone = "us-central1"
+        gkeCredentialsId = "my-gke-credentials"
     }
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
                     script {
-                         kubernetesDeploy(configs: 'chat.yml', kubeconfigId:'kubernetesconfigpwd')
+                         gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-dev',
+                            containerName: 'chat',
+                            yamlPath: 'chat.yaml'
+                         )
                         }
                 }
          }
         stage('Deploy to Test Environment') {
                 steps {
                     script {
-                         kubernetesDeploy(configs: 'chattest.yml', kubeconfigId:'kubernetesconfigpwd')
+                        gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-test',
+                            containerName: 'chat-test',
+                            yamlPath: 'chattest.yaml'
+                         )
                         }
                 }
         }
         stage('Deploy to Prod Environment') {
                 steps {
                     script {
-                         kubernetesDeploy(configs: 'chatprod.yml', kubeconfigId:'kubernetesconfigpwd')
+                        gkeDeploy(
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            zone: gkeZone,
+                            deployName: 'chat-prod',
+                            containerName: 'chat-prod',
+                            yamlPath: 'chatprod.yaml'
+                         )
                         }
                 }
         }

@@ -1,9 +1,8 @@
 pipeline {
     agent any
     environment {
-        dockerImageName = "shehan97105/chatapiservice:v2"
+        dockerImageName = "shehan97105/chatapiservice:v1"
         dockerImage = null
-        openaiApiKey = ""
     }
     stages {
         stage('Build') {
