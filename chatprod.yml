@@ -24,7 +24,7 @@ spec:
           - name: OPENAI_API_KEY
             valueFrom:
               secretKeyRef:
-                name: jenkins-secret
+                name: openai-api-key
                 key: openai-api-key
         ports:
         - containerPort: 5001

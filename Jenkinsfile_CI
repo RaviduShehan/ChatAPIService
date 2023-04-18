@@ -3,7 +3,7 @@ pipeline {
     environment {
         dockerImageName = "shehan97105/chatapiservice"
         dockerImage = null
-        openaiApiKey = credentials('jenkins-secret/openai-api-key')
+        openaiApiKey = credentials('openai-api-key')
     }
     stages {
         stage('Build') {
