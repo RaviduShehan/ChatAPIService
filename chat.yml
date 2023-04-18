@@ -30,6 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: chatapi-dev
+  namespace: dev-env
   labels:
     app: chatapi-dev
 spec:
