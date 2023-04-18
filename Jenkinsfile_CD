@@ -5,7 +5,7 @@ pipeline {
         kubeconfigId = "${params.KUBECONFIG_ID}"
 
         gkeClusterName = "openai-api-cluster"
-        gkeZone = "us-central1"
+        gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
     }
     stages{
