@@ -35,8 +35,7 @@ pipeline {
                 script {
                     build job: 'CD-ChatService', parameters: [
                         string(name: 'DOCKER_IMAGE_NAME', value: dockerImageName),
-                        string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd'),
-                        string(name: 'OPENAI_API_KEY', value: openaiApiKey)]
+                        string(name: 'KUBECONFIG_ID', value: 'kubernetesconfigpwd')]
                 }
             }
         }

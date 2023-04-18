@@ -19,7 +19,7 @@ spec:
           - name: OPENAI_API_KEY
             valueFrom:
               secretKeyRef:
-                name: openai-api-key
+                name: openai-api-keynew
                 key: OPENAI_API_KEY
         ports:
         - containerPort: 5001
