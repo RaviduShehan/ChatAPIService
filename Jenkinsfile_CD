@@ -6,25 +6,25 @@ pipeline {
     }
     stages{
         stage('Deploy to Dev Environment') {
-            steps {
-                script {
-                    sh "kubectl apply -f chat.yml --kubeconfig=$kubeconfigId"
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chat.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
                 }
-            }
-        }
+         }
         stage('Deploy to Test Environment') {
-            steps {
-                script {
-                    sh "kubectl apply -f chattest.yml --kubeconfig=$kubeconfigId"
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chattest.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
                 }
-            }
         }
         stage('Deploy to Prod Environment') {
-            steps {
-                script {
-                    sh "kubectl apply -f chatprod.yml --kubeconfig=$kubeconfigId"
+                steps {
+                    script {
+                         kubernetesDeploy(configs: 'chatprod.yml', kubeconfigId:'kubernetesconfigpwd')
+                        }
                 }
-            }
         }
     }
 }
