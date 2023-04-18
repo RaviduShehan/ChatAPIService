@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        COMMIT_SHA=$(git rev-parse HEAD)
         dockerImageName = "shehan97105/chatapiservice:v5"
         dockerImage = null
     }
