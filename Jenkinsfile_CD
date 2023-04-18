@@ -22,7 +22,7 @@ pipeline {
                         location: gkeZone,
                         manifestPattern: 'chat.yaml',
                         verifyDeployments: true
-                         )]
+                         ])
                         }
                 }
         stage('Deploy to Test Environment') {
@@ -34,8 +34,8 @@ pipeline {
                         clusterName: gkeClusterName,
                         location: gkeZone,
                         manifestPattern: 'chattest.yaml',
-                        verifyDeployments: true
-                         )]
+                        verifyDeployments: true]
+                         )
                 }
         }
         stage('Deploy to Prod Environment') {
@@ -48,7 +48,7 @@ pipeline {
                         location: gkeZone,
                         manifestPattern: 'chatprod.yaml',
                         verifyDeployments: true
-                         )]
+                         ])
                 }
         }
     }
