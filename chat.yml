@@ -29,13 +29,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: DEPLOYMENT_NAME-Service
+  name: DEPLOYMENT_NAME-service
   namespace: NAMESPACE-env
   labels:
-    app: DEPLOYMENT_NAME-Service
+    app: DEPLOYMENT_NAME-service
 spec:
   selector:
-    app: DEPLOYMENT_NAME-Service
+    app: DEPLOYMENT_NAME-service
   ports:
     - name: http
       port: 80
