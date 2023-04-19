@@ -23,8 +23,8 @@ pipeline {
         }
         stage('Deploy to Dev Environment') {
                 steps {
-                    sh 'sed -i \"s/DEPLOYMENT_NAME/${DEPLOYMENT_ID}/g\" chat.yml'
-                    sh 'sed -i \"s/NAMESPACE/${NAMESPACE_ID}/g\" chat.yml'
+                    sh 'sed -i "s/\${DEPLOYMENT_NAME}/chatapi/g\" chat.yml'
+                    sh 'sed -i "s/\${NAMESPACE}/dev/g\" chat.yml'
                     step([
                         $class: 'KubernetesEngineBuilder',
                         projectId: 'apiservices-384122',
