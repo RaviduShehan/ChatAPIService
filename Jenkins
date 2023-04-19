@@ -4,7 +4,7 @@
 pipeline {
     agent any
     environment {
-        dockerImageName = "${params.DOCKER_IMAGE_NAME}"
+        DOCKERIMAGE = "${params.DOCKER_IMAGE_NAME}"
         kubeconfigId = "${params.KUBECONFIG_ID}"
 
         gkeClusterName = "openai-api-cluster"
@@ -17,7 +17,7 @@ pipeline {
          stage('Get docker Image'){
            steps {
                 script {
-                    echo "Docker image name: ${dockerImageName}"
+                    echo "Docker image name: ${DOCKERIMAGE}"
                     echo "Namespce: ${NAMESPACE_ID}"
                     echo "DEPLOYMENT_ID: ${DEPLOYMENT_ID}"
                 }
@@ -30,6 +30,7 @@ pipeline {
                             def manifest = readManifestFile('chat.yml')
                             manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
                             manifest = manifest.replaceAll('NAMESPACE', "${NAMESPACE_ID}")
+                            manifest =manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                             writeFile file: 'chat.yml', text: manifest
                         }
                     }
