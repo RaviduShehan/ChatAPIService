@@ -7,7 +7,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "echo 'Commit SHA: sh(returnStdout: true, script: 'git rev-parse HEAD').trim()'"
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
