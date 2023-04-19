@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: chatapi-dev
-   namespace: dev-env
+   name: ${DEPLOYMENT_NAME}
+   namespace: ${NAMESPACE}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chatapi-dev
+      app: ${DEPLOYMENT_NAME}
   template:
     metadata:
       labels:
-        app: chatapi-dev
+        app: ${DEPLOYMENT_NAME}
     spec:
       containers:
-      - name: chatapi-dev
+      - name: ${DEPLOYMENT_NAME}
         image: ${dockerImageName}
         env:
           - name: OPENAI_API_KEY
@@ -29,13 +29,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: chatapi-dev
-  namespace: dev-env
+  name: ${DEPLOYMENT_NAME}
+  namespace: ${NAMESPACE}
   labels:
-    app: chatapi-dev
+    app: ${DEPLOYMENT_NAME}
 spec:
   selector:
-    app: chatapi-dev
+    app: ${DEPLOYMENT_NAME}
   ports:
     - name: http
       port: 80
