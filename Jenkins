@@ -46,7 +46,7 @@ pipeline {
                             credentialsId: gkeCredentialsId,
                             clusterName: gkeClusterName,
                             location: gkeZone,
-                            manifestPattern: 'chat_modified.yml'
+                            manifestPattern: 'chat.yml'
                         ])
                     } else if (NAMESPACE_ID == 'test') {
                         echo "Deploy to Test Env"
@@ -56,7 +56,7 @@ pipeline {
                             credentialsId: gkeCredentialsId,
                             clusterName: gkeClusterName,
                             location: gkeZone,
-                            manifestPattern: 'chat_modified.yml'
+                            manifestPattern: 'chat.yml'
                         ])
                     } else if (NAMESPACE_ID == 'prod') {
                         echo "Deploy to Prod Env"
@@ -66,7 +66,7 @@ pipeline {
                             credentialsId: gkeCredentialsId,
                             clusterName: gkeClusterName,
                             location: gkeZone,
-                            manifestPattern: 'chat_modified.yml'
+                            manifestPattern: 'chat.yml'
                         ])
                     }
                 }
