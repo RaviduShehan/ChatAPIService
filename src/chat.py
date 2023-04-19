@@ -28,18 +28,17 @@ def chat():
     # Save service name, status, and timestamp to Firestore
     service_ref = db.collection('Services').document('ChatService_Status')
     print("Service Started.....")
-    prompt = request.args.get('prompt')
-    if not prompt:
-        service_ref.update({'status': 'Error'})
-        return jsonify(error="Prompt parameter is missing"), 400
-
     service_data = {
-        'service_name': 'chat',
-        'status': 'Running',
-        'timestamp': datetime.datetime.now()
+        'service_name': 'Chat',
+        'status': 'Starting',
+        'timestamp': datetime.now()
     }
     service_ref.set(service_data)
-
+    prompt = request.args.get('prompt')
+    if not prompt:
+        service_ref.update({'status': 'Empty Prompt'})
+        return jsonify(error="Prompt parameter is missing"), 400
+    service_ref.update({'status': 'Running'})
     try:
         response = openai.Completion.create(
             engine="davinci",
