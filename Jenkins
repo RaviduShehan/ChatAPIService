@@ -7,14 +7,14 @@ pipeline {
         gkeClusterName = "openai-api-cluster"
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
-        NAMESPACE_ID= dev-env
-        DEPLOYMENT_ID= chatapi-dev
+        NAMESPACE_ID= dev
+        DEPLOYMENT_ID= chatapidev
     }
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
                     sh "sed -i 's/NAMESPACE/${NAMESPACE_ID}/g' chat.yml"
-                    sh "sed -i 's/DEPLOYMENT_NAME/${DEPLOYMENT_NAME_ID}/chatapi-dev/g' chat.yml"
+                    sh "sed -i 's/DEPLOYMENT_NAME/${DEPLOYMENT_ID}/g' chat.yml"
                     step([
                         $class: 'KubernetesEngineBuilder',
                         projectId: 'apiservices-384122',

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
    name: DEPLOYMENT_NAME
-   namespace: NAMESPACE
+   namespace: ${NAMESPACE}-env
 spec:
   replicas: 1
   selector:
@@ -30,7 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: DEPLOYMENT_NAME
-  namespace: NAMESPACE
+  namespace: ${NAMESPACE}-env
   labels:
     app: DEPLOYMENT_NAME
 spec:
