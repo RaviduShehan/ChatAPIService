@@ -35,7 +35,7 @@ pipeline {
                     }
                 }
 
-        stage('Deploy to Dev Environment') {
+        stage('Deploy to ${NAMESPACE_ID} Environment') {
                 steps {
 
                     step([
