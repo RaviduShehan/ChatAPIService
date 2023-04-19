@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        versionID = $(git rev-parse HEAD)
+        versionID = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
         dockerImageName = "shehan97105/chatapiservice:${versionID}"
         dockerImage = null
     }
