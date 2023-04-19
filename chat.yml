@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: DEPLOYMENT_NAME-deployment
-        image: ${dockerImageName}
+        image: dockerImageName
         env:
           - name: OPENAI_API_KEY
             valueFrom:
