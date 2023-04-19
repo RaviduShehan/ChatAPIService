@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        dockerImageName = "shehan97105/chatapiservice:${BUILD_ID}"
+        dockerImageName = "shehan97105/chatapiservice:${GIT_COMMIT}"
         dockerImage = null
     }
     stages {
