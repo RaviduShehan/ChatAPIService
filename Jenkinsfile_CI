@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        versionID = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-        dockerImageName = "shehan97105/chatapiservice:${versionID}"
+        buildNumber = counter(initialValue: 1, name: 'BuildNumber')
+        dockerImageName = "shehan97105/chatapiservice:${buildNumber}"
         dockerImage = null
     }
     stages {
