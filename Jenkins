@@ -21,10 +21,24 @@ pipeline {
             }
 
         }
+        stage('Replace values in manifest file') {
+            steps {
+                script {
+                            def manifest = readManifestFile('chat.yml')
+                            manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                            manifest = manifest.replaceAll('NAMESPACE', "${NAMESPACE_ID}")
+                            writeFile file: 'chat.yml', text: manifest
+                        }
+                    }
+                }
+
+                def readManifestFile(file) {
+                    return readFile(file).trim()
+             }
+
         stage('Deploy to Dev Environment') {
                 steps {
-                    sh 'sed -i "s/\${DEPLOYMENT_NAME}/chatapi/g\" chat.yml'
-                    sh 'sed -i "s/\${NAMESPACE}/dev/g\" chat.yml'
+
                     step([
                         $class: 'KubernetesEngineBuilder',
                         projectId: 'apiservices-384122',
