@@ -11,9 +11,20 @@ pipeline {
         DEPLOYMENT_ID="chatapidev"
     }
     stages{
+         stage('Get docker Image'){
+           steps {
+                script {
+                    echo "Docker image name: ${dockerImageName}"
+                    echo "Namespce: ${NAMESPECE_ID}"
+                    echo "DEPLOYMENT_ID: ${DEPLOYMENT_ID}"
+                }
+            }
+
+        }
         stage('Deploy to Dev Environment') {
                 steps {
                     sh 'sed -i "s/DEPLOYMENT_NAME/${DEPLOYMENT_ID}/g" chat.yml'
+                    sh 'sed -i "s/NAMESPACE/${NAMESPACE_ID}/g" chat.yml'
                     step([
                         $class: 'KubernetesEngineBuilder',
                         projectId: 'apiservices-384122',
@@ -23,14 +34,6 @@ pipeline {
                         manifestPattern: 'chat.yml'])
 
                    }
-        }
-        stage('Get docker Image'){
-           steps {
-                script {
-                    echo "Docker image name: ${dockerImageName}"
-                }
-            }
-
         }
 
     }
