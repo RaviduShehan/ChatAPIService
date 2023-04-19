@@ -1,27 +1,35 @@
+import os
 import unittest
 import requests
 from flask import jsonify
 
 
 class ChatServiceTest(unittest.TestCase):
-    def setUp(self):
-        self.url = "http://localhost:5001/chat"
+    def test_chat_with_valid_prompt(self):
+        prompt = "Hello"
+        response = requests.get(self.url + f"?prompt={prompt}")
+        assert response.status_code == 200
+        response_text = response.json().get("response", "")
+        assert response_text != ""
+        assert "error" not in response_text.lower()
+        assert "exception" not in response_text.lower()
+        assert "traceback" not in response_text.lower()
 
-    def test_chat_without_prompt(self):
+    def test_chat_with_missing_prompt(self):
         response = requests.get(self.url)
         self.assertEqual(response.status_code, 400)
-
-    def test_chat_with_prompt(self):
-        prompt = "generic prompt text"
-        expected_answer = ""
-        response = requests.get(self.url + f"?prompt={prompt}")
-        self.assertEqual(response.status_code, 200)
-        response_text = response.json().get("text", "")
+        response_text = response.json().get("error", "")
         self.assertIsNotNone(response_text, "Response text is empty")
-        self.assertNotIn("error", response_text.lower(), "Error in response text")
-        self.assertNotIn("exception", response_text.lower(), "Exception in response text")
-        self.assertNotIn("traceback", response_text.lower(), "Traceback in response text")
-        self.assertIn(expected_answer, response_text, "Expected answer not found in response text")
+        self.assertIn("Prompt parameter is missing", response_text, "Error message not found in response text")
+
+
+    def test_chat_with_invalid_prompt(self):
+        prompt = {"prompt": "How are you doing today?"}
+        response = requests.get(self.url, params=prompt)
+        print(response.status_code)
+        assert response.status_code == 500
+        response_text = response.json().get("error", "")
+        assert response_text != ""
 
 
 if __name__ == '__main__':
