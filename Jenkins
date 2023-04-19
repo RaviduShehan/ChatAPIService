@@ -18,13 +18,14 @@ pipeline {
                         clusterName: gkeClusterName,
                         location: gkeZone,
                         manifestPattern: 'chat.yml'])
-                        }
-                steps {
+
+                step {
                 script {
                     echo "Docker image name: ${dockerImageName}"
                 }
             }
-                }
+            }
+           }
 
     }
 }
