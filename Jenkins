@@ -34,22 +34,43 @@ pipeline {
                             writeFile file: 'chat.yml', text: manifest
                         }
                     }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    if (NAMESPACE_ID == 'dev') {
+                        echo "Deploy to Dev Env"
+                        step([
+                            $class: 'KubernetesEngineBuilder',
+                            projectId: 'apiservices-384122',
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            location: gkeZone,
+                            manifestPattern: 'chat_modified.yml'
+                        ])
+                    } else if (NAMESPACE_ID == 'test') {
+                        echo "Deploy to Test Env"
+                        step([
+                            $class: 'KubernetesEngineBuilder',
+                            projectId: 'apiservices-384122',
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            location: gkeZone,
+                            manifestPattern: 'chat_modified.yml'
+                        ])
+                    } else if (NAMESPACE_ID == 'prod') {
+                        echo "Deploy to Prod Env"
+                        step([
+                            $class: 'KubernetesEngineBuilder',
+                            projectId: 'apiservices-384122',
+                            credentialsId: gkeCredentialsId,
+                            clusterName: gkeClusterName,
+                            location: gkeZone,
+                            manifestPattern: 'chat_modified.yml'
+                        ])
+                    }
                 }
-
-        stage('Deploy to Dev Environment') {
-                steps {
-
-                    step([
-                        $class: 'KubernetesEngineBuilder',
-                        projectId: 'apiservices-384122',
-                        credentialsId: gkeCredentialsId,
-                        clusterName: gkeClusterName,
-                        location: gkeZone,
-                        manifestPattern: 'chat.yml'])
-
-                   }
+            }
         }
     }
 }
-
-
