@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: DEPLOYMENT_NAME-deployment
-  strategry:
+  strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 2
