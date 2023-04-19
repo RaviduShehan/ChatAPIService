@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-        buildNumber = counter(initialValue: 1, name: 'BuildNumber')
-        dockerImageName = "shehan97105/chatapiservice:${buildNumber}"
+        dockerImageName = "shehan97105/chatapiservice:${BUILD_ID}"
         dockerImage = null
     }
     stages {
