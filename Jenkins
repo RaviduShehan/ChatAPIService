@@ -1,3 +1,6 @@
+    def readManifestFile(file) {
+        return readFile(file).trim()
+ }
 pipeline {
     agent any
     environment {
@@ -31,10 +34,6 @@ pipeline {
                         }
                     }
                 }
-
-                def readManifestFile(file) {
-                    return readFile(file).trim()
-             }
 
         stage('Deploy to Dev Environment') {
                 steps {
