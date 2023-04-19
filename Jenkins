@@ -10,8 +10,8 @@ pipeline {
         gkeClusterName = "openai-api-cluster"
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
-        NAMESPACE_ID="dev"
-        DEPLOYMENT_ID="chatapidev"
+        NAMESPACE_ID="test"
+        DEPLOYMENT_ID="chatapiTest"
     }
     stages{
          stage('Get docker Image'){
@@ -35,7 +35,7 @@ pipeline {
                     }
                 }
 
-        stage('Deploy to ${NAMESPACE_ID} Environment') {
+        stage('Deploy to Dev Environment') {
                 steps {
 
                     step([
