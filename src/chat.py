@@ -23,7 +23,7 @@ project_id = "apiservices-384019"
 db = firestore.Client(project=project_id)
 
 
-@app.route('/chat')
+@app.route('/')
 def chat():
     # Save service name, status, and timestamp to Firestore
     service_ref = db.collection('Services').document('ChatService_Status')
