@@ -11,7 +11,7 @@ pipeline {
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
         NAMESPACE_ID="dev"
-        DEPLOYMENT_ID="chatapidev"
+        DEPLOYMENT_ID="chatapi"
     }
     stages{
          stage('Get docker Image'){
