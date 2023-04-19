@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: DEPLOYMENT_NAME-deployment
+  strategry:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
   template:
     metadata:
       labels:
