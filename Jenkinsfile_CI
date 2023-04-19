@@ -1,14 +1,13 @@
 pipeline {
     agent any
     environment {
-        COMMIT_SHA = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
         dockerImageName = "shehan97105/chatapiservice:v23"
         dockerImage = null
     }
     stages {
         stage('Build') {
             steps {
-                sh "echo 'Commit SHA: ${COMMIT_SHA}'"
+                sh "echo 'Commit SHA: sh(returnStdout: true, script: 'git rev-parse HEAD').trim()'"
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
