@@ -15,7 +15,7 @@ pipeline {
            steps {
                 script {
                     echo "Docker image name: ${dockerImageName}"
-                    echo "Namespce: ${NAMESPECE_ID}"
+                    echo "Namespce: ${NAMESPACE_ID}"
                     echo "DEPLOYMENT_ID: ${DEPLOYMENT_ID}"
                 }
             }
