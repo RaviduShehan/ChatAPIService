@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: chatapi-dev
-        image: shehan97105/chatapiservice:v8
+        image: ${dockerImageName}
         env:
           - name: OPENAI_API_KEY
             valueFrom:

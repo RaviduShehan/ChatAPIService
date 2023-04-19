@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Load OpenAI API key to API
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 # openai.api_key ="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"
-print(openai.api_key)
+
 # Initialize Firestore client with explicit project ID
 project_id = "apiservices-384019"
 db = firestore.Client(project=project_id)
@@ -31,13 +31,13 @@ def chat():
     print(openai.api_key)
     prompt = request.args.get('prompt')
     if not prompt:
-        service_ref.update({'status': 'error'})
+        service_ref.update({'status': 'Error'})
         print(openai.api_key)
         return jsonify(error="Prompt parameter is missing"), 400
 
     service_data = {
         'service_name': 'chat',
-        'status': 'running',
+        'status': 'Running',
         'timestamp': datetime.datetime.now()
     }
     service_ref.set(service_data)
@@ -54,7 +54,7 @@ def chat():
         return jsonify(response=response.choices[0].text.strip())
     except Exception as e:
         # Update service status to 'error' if an exception occurs
-        service_ref.update({'status': 'error'})
+        service_ref.update({'status': 'Error'})
         return jsonify(error=str(e)), 500
 
 if __name__ == '__main__':
