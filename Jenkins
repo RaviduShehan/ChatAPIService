@@ -13,14 +13,14 @@ pipeline {
     stages{
         stage('Deploy to Dev Environment') {
                 steps {
-                    sh "sed -i 's/DEPLOYMENT_NAME/${DEPLOYMENT_ID}/g' chat.yml"
+                    sh "sed -i 's/DEPLOYMENT_NAME/${DEPLOYMENT_ID}/g' kubefiles/chat.yml"
                     step([
                         $class: 'KubernetesEngineBuilder',
                         projectId: 'apiservices-384122',
                         credentialsId: gkeCredentialsId,
                         clusterName: gkeClusterName,
                         location: gkeZone,
-                        manifestPattern: 'chat.yml'])
+                        manifestPattern: 'kubefiles/chat.yml'])
 
                    }
         }
