@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 echo "Deploy to Test Env"
-                sh 'pytest tests/test_chat.py'
+                sh 'pytest test_chat.py'
                 step([
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
