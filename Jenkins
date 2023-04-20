@@ -10,7 +10,7 @@ pipeline {
         gkeClusterName = "openai-api-cluster"
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
-        NAMESPACE_ID="prod"
+        NAMESPACE_ID="test"
         DEPLOYMENT_ID="chatapi"
     }
     stages{
@@ -50,6 +50,10 @@ pipeline {
                         ])
                     } else if (NAMESPACE_ID == 'test') {
                         echo "Deploy to Test Env"
+                         step {
+                          echo "Running test cases"
+                                sh 'pytest tests/test_chat.py'
+                          }
                         step([
                             $class: 'KubernetesEngineBuilder',
                             projectId: 'apiservices-384122',
