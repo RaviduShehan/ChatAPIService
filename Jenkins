@@ -17,7 +17,6 @@ pipeline {
             steps {
                 script {
                     echo "Docker image name: ${DOCKERIMAGE}"
-                    echo "DEPLOYMENT_ID: ${DEPLOYMENT_ID}"
                 }
             }
         }
@@ -71,9 +70,6 @@ pipeline {
                     location: gkeZone,
                     manifestPattern: 'chattest.yml'
                 ])
-                script{
-                echo "Deployed to Tes Env"
-                }
             }
         }
          stage('Deploy to Prod Environment') {
@@ -106,9 +102,6 @@ pipeline {
                     location: gkeZone,
                     manifestPattern: 'chatprod.yml'
                 ])
-                                script{
-                echo "Deployed to Prod Env"
-                }
             }
     }
 }
