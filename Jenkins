@@ -26,9 +26,10 @@ pipeline {
             steps {
                 echo "Deploy to Dev Env"
                  script {
+                    NAME = "dev"
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', dev)
+                    manifest = manifest.replaceAll('NAMESPACE', "${NAME}")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
@@ -59,9 +60,10 @@ pipeline {
                     }
                 }
                 script {
+                    NAME = "test"
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', test)
+                    manifest = manifest.replaceAll('NAMESPACE',"${NAME}" )
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
@@ -92,7 +94,7 @@ pipeline {
                     }
                 }
                 script {
-                    NAME = "dev"
+                    NAME = "prod"
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
                     manifest = manifest.replaceAll('NAMESPACE', "${NAME}")
