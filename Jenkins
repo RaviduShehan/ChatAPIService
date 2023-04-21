@@ -41,7 +41,6 @@ pipeline {
                     manifestPattern: 'chat.yml'
                 ])
             }
-        }
         post {
                 always {
                     input "Do you want to deploy to test environment?", ok: 'Proceed', submitter: 'user'
@@ -70,18 +69,7 @@ pipeline {
                     manifestPattern: 'chat.yml'
                 ])
             }
-        }
-        stage('Manual Approval for Deploy to Prod Environment') {
-            when {
-                branch 'main'
-            }
-            steps {
-                script {
-                    // Prompt the user to manually approve the deployment to the test environment
-                    input message: 'Deploy to Prod Environment?', ok: 'Deploy'
-                }
-            }
-        }
+
         post {
                 always {
                     input "Do you want to deploy to prod environment?", ok: 'Proceed', submitter: 'user'
