@@ -14,7 +14,7 @@ firebase_admin.initialize_app(cred)
 
 app = Flask(__name__)
 
-# Load OpenAI API key to API
+# Load OpenAI API ke to API
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
