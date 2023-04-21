@@ -42,6 +42,17 @@ pipeline {
                 ])
             }
         }
+        stage('Manual Approval for Deploy to Test Environment') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    // Prompt the user to manually approve the deployment to the test environment
+                    input message: 'Deploy to Test Environment?', ok: 'Deploy'
+                }
+            }
+        }
         stage('Deploy to Test Environment') {
             steps {
                 echo "Deploy to Test Env"
@@ -60,6 +71,17 @@ pipeline {
                     location: gkeZone,
                     manifestPattern: 'chat.yml'
                 ])
+            }
+        }
+        stage('Manual Approval for Deploy to Prod Environment') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    // Prompt the user to manually approve the deployment to the test environment
+                    input message: 'Deploy to Prod Environment?', ok: 'Deploy'
+                }
             }
         }
         stage('Deploy to Prod Environment') {
