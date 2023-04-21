@@ -42,18 +42,16 @@ pipeline {
                 ])
             }
         }
-        stage('Manual Approval for Deploy to Test Environment') {
-            when {
-                branch 'main'
-            }
-            steps {
-                script {
-                    // Prompt the user to manually approve the deployment to the test environment
-                    input message: 'Deploy to Test Environment?', ok: 'Deploy'
+        post {
+                always {
+                    input "Do you want to deploy to test environment?", ok: 'Proceed', submitter: 'user'
                 }
             }
         }
         stage('Deploy to Test Environment') {
+            when {
+                expression { currentBuild.result == 'SUCCESS' }
+            }
             steps {
                 echo "Deploy to Test Env"
                 script {
@@ -84,7 +82,16 @@ pipeline {
                 }
             }
         }
+        post {
+                always {
+                    input "Do you want to deploy to prod environment?", ok: 'Proceed', submitter: 'user'
+                }
+            }
+        }
         stage('Deploy to Prod Environment') {
+            when {
+                expression { currentBuild.result == 'SUCCESS' }
+            }
 
             steps {
                 echo "Deploy to Prod Env"
