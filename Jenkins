@@ -53,7 +53,7 @@ pipeline {
                             deployApproved = true
                         } else {
                             echo "Deployment to Test Environment not approved"
-                            sleep time: 60, unit: 'SECONDS'
+                            currentBuild.result = 'ABORTED'
                             error("Pipeline aborted: Deployment not approved")
                         }
                     }
@@ -86,7 +86,7 @@ pipeline {
                             deployApproved = true
                         } else {
                             echo "Deployment to Prod Environment not approved"
-                            sleep time: 60, unit: 'SECONDS'
+                            currentBuild.result = 'ABORTED'
                             error("Pipeline aborted: Deployment not approved")
                         }
                     }
