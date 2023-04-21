@@ -65,7 +65,7 @@ pipeline {
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
                     manifest = manifest.replaceAll('NAMESPACE',"${NAME}" )
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
-                    writeFile file: 'chat.yml', text: manifest
+                    writeFile file: 'chattest.yml', text: manifest
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
@@ -73,7 +73,7 @@ pipeline {
                     credentialsId: gkeCredentialsId,
                     clusterName: gkeClusterName,
                     location: gkeZone,
-                    manifestPattern: 'chat.yml'
+                    manifestPattern: 'chattest.yml'
                 ])
             }
         }
@@ -99,7 +99,7 @@ pipeline {
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
                     manifest = manifest.replaceAll('NAMESPACE', "${NAME}")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
-                    writeFile file: 'chat.yml', text: manifest
+                    writeFile file: 'chatprod.yml', text: manifest
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
@@ -107,7 +107,7 @@ pipeline {
                     credentialsId: gkeCredentialsId,
                     clusterName: gkeClusterName,
                     location: gkeZone,
-                    manifestPattern: 'chat.yml'
+                    manifestPattern: 'chatprod.yml'
                 ])
             }
     }
