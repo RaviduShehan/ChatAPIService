@@ -11,7 +11,6 @@ pipeline {
         gkeClusterName = "openai-api-cluster"
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
-        DEPLOYMENT_ID="chatapi"
     }
     stages{
         stage('Get docker Image'){
@@ -27,7 +26,7 @@ pipeline {
                 echo "Deploy to Dev Env"
                  script {
                     def manifest = readManifestFile('chat.yml')
-                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "chatapidev")
                     manifest = manifest.replaceAll('NAMESPACE', "dev")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chatdev.yml', text: manifest
@@ -46,7 +45,7 @@ pipeline {
             steps {
                 script {
                     def manifest = readManifestFile('chat.yml')
-                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "chatapitest")
                     manifest = manifest.replaceAll('NAMESPACE',"test" )
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chattest.yml', text: manifest
@@ -81,7 +80,7 @@ pipeline {
             steps {
                 script {
                     def manifest = readManifestFile('chat.yml')
-                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "chatapiprod")
                     manifest = manifest.replaceAll('NAMESPACE', "prod")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chatprod.yml', text: manifest
