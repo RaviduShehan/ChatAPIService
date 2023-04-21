@@ -54,6 +54,7 @@ pipeline {
                         } else {
                             echo "Deployment to Test Environment not approved"
                             sleep time: 60, unit: 'SECONDS'
+                            error("Pipeline aborted: Deployment not approved")
                         }
                     }
                 }
@@ -86,6 +87,7 @@ pipeline {
                         } else {
                             echo "Deployment to Prod Environment not approved"
                             sleep time: 60, unit: 'SECONDS'
+                            error("Pipeline aborted: Deployment not approved")
                         }
                     }
                 }
