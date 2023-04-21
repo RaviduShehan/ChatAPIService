@@ -75,7 +75,7 @@ pipeline {
                 ])
             }
         }
-        stage('Deploy to Prod Environment') {
+         stage('Deploy to Prod Environment') {
             steps {
                 echo "Deploy to Prod Env"
                 script {
@@ -87,4 +87,13 @@ pipeline {
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
-                    projectId: 'apis
+                    projectId: 'apiservices-384122',
+                    credentialsId: gkeCredentialsId,
+                    clusterName: gkeClusterName,
+                    location: gkeZone,
+                    manifestPattern: 'chat.yml'
+                ])
+            }
+    }
+}
+}
