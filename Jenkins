@@ -43,9 +43,6 @@ pipeline {
             }
         }
         stage('Deploy to Test Environment') {
-            when {
-                expression { currentBuild.result == 'SUCCESS' }
-            }
             steps {
                 echo "Deploy to Test Env"
                 script {
@@ -54,6 +51,19 @@ pipeline {
                     manifest = manifest.replaceAll('NAMESPACE', "test")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
+                }
+                script {
+                    def deployApproved = false
+                    while (!deployApproved) {
+                        def inputMessage = "Deploy to Test Environment? (yes/no)"
+                        def inputResult = input message: inputMessage, parameters: [string(defaultValue: 'no', description: '', name: 'deploy')]
+                        if (inputResult.toLowerCase() == "yes") {
+                            deployApproved = true
+                        } else {
+                            echo "Deployment to Test Environment not approved"
+                            sleep time: 60, unit: 'SECONDS'
+                        }
+                    }
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
@@ -66,10 +76,6 @@ pipeline {
             }
         }
         stage('Deploy to Prod Environment') {
-            when {
-                expression { currentBuild.result == 'SUCCESS' }
-            }
-
             steps {
                 echo "Deploy to Prod Env"
                 script {
@@ -81,13 +87,4 @@ pipeline {
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
-                    projectId: 'apiservices-384122',
-                    credentialsId: gkeCredentialsId,
-                    clusterName: gkeClusterName,
-                    location: gkeZone,
-                    manifestPattern: 'chat.yml'
-                ])
-            }
-        }
-    }
-}
+                    projectId: 'apis
