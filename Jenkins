@@ -66,7 +66,6 @@ pipeline {
                     writeFile file: 'chattest.yml', text: manifest
                 }
                 step([
-                   echo "Deployed to Tes Env"
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
                     credentialsId: gkeCredentialsId,
@@ -74,6 +73,9 @@ pipeline {
                     location: gkeZone,
                     manifestPattern: 'chattest.yml'
                 ])
+                script{
+                echo "Deployed to Tes Env"
+                }
             }
         }
          stage('Deploy to Prod Environment') {
@@ -100,7 +102,6 @@ pipeline {
                     writeFile file: 'chatprod.yml', text: manifest
                 }
                 step([
-                    echo "Deployed to Tes Env"
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
                     credentialsId: gkeCredentialsId,
@@ -108,6 +109,9 @@ pipeline {
                     location: gkeZone,
                     manifestPattern: 'chatprod.yml'
                 ])
+                                script{
+                echo "Deployed to Prod Env"
+                }
             }
     }
 }
