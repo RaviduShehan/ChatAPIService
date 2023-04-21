@@ -30,7 +30,7 @@ pipeline {
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
                     manifest = manifest.replaceAll('NAMESPACE', "dev")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
-                    writeFile file: 'chat.yml', text: manifest
+                    writeFile file: 'chatdev.yml', text: manifest
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
@@ -38,7 +38,7 @@ pipeline {
                     credentialsId: gkeCredentialsId,
                     clusterName: gkeClusterName,
                     location: gkeZone,
-                    manifestPattern: 'chat.yml'
+                    manifestPattern: 'chatdev.yml'
                 ])
             }
         }
@@ -85,6 +85,7 @@ pipeline {
                     manifest = manifest.replaceAll('NAMESPACE', "prod")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chatprod.yml', text: manifest
+
                     def deployApproved = false
                     while (!deployApproved) {
                         def inputMessage = "Deploy to Prod Environment? (yes/no)"
