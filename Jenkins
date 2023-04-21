@@ -28,7 +28,7 @@ pipeline {
                  script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "dev")
+                    manifest = manifest.replaceAll('NAMESPACE', dev)
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
@@ -61,7 +61,7 @@ pipeline {
                 script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "test")
+                    manifest = manifest.replaceAll('NAMESPACE', test)
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
@@ -94,7 +94,7 @@ pipeline {
                 script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "prod")
+                    manifest = manifest.replaceAll('NAMESPACE', prod)
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
