@@ -44,14 +44,6 @@ pipeline {
         }
         stage('Deploy to Test Environment') {
             steps {
-                echo "Deploy to Test Env"
-                script {
-                    def manifest = readManifestFile('chat.yml')
-                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "test")
-                    manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
-                    writeFile file: 'chat.yml', text: manifest
-                }
                 script {
                     def deployApproved = false
                     while (!deployApproved) {
@@ -65,6 +57,13 @@ pipeline {
                         }
                     }
                 }
+                script {
+                    def manifest = readManifestFile('chat.yml')
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('NAMESPACE', "test")
+                    manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
+                    writeFile file: 'chat.yml', text: manifest
+                }
                 step([
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
@@ -77,7 +76,19 @@ pipeline {
         }
          stage('Deploy to Prod Environment') {
             steps {
-                echo "Deploy to Prod Env"
+                script {
+                    def deployApproved = false
+                    while (!deployApproved) {
+                        def inputMessage = "Deploy to Prod Environment? (yes/no)"
+                        def inputResult = input message: inputMessage, parameters: [string(defaultValue: 'no', description: '', name: 'deploy')]
+                        if (inputResult.toLowerCase() == "yes") {
+                            deployApproved = true
+                        } else {
+                            echo "Deployment to Prod Environment not approved"
+                            sleep time: 60, unit: 'SECONDS'
+                        }
+                    }
+                }
                 script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
