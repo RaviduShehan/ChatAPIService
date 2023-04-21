@@ -11,7 +11,6 @@ pipeline {
         gkeClusterName = "openai-api-cluster"
         gkeZone = "us-central1-c"
         gkeCredentialsId = "apiservicesauth"
-        NAMESPACE_ID="dev"
         DEPLOYMENT_ID="chatapi"
     }
     stages{
@@ -19,28 +18,20 @@ pipeline {
             steps {
                 script {
                     echo "Docker image name: ${DOCKERIMAGE}"
-                    echo "Namespace: ${NAMESPACE_ID}"
                     echo "DEPLOYMENT_ID: ${DEPLOYMENT_ID}"
                 }
             }
         }
-        stage('Replace values in manifest file') {
+        stage('Deploy to Dev Environment') {
             steps {
-                script {
+                echo "Deploy to Dev Env"
+                 script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "${NAMESPACE_ID}")
+                    manifest = manifest.replaceAll('NAMESPACE', "dev")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
-            }
-        }
-        stage('Deploy to Dev Environment') {
-            when {
-                expression { NAMESPACE_ID == 'dev' }
-            }
-            steps {
-                echo "Deploy to Dev Env"
                 step([
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
@@ -52,11 +43,15 @@ pipeline {
             }
         }
         stage('Deploy to Test Environment') {
-            when {
-                expression { NAMESPACE_ID == 'test' }
-            }
             steps {
                 echo "Deploy to Test Env"
+                script {
+                    def manifest = readManifestFile('chat.yml')
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('NAMESPACE', "test")
+                    manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
+                    writeFile file: 'chat.yml', text: manifest
+                }
                 step([
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
@@ -68,11 +63,16 @@ pipeline {
             }
         }
         stage('Deploy to Prod Environment') {
-            when {
-                expression { NAMESPACE_ID == 'prod' }
-            }
+
             steps {
                 echo "Deploy to Prod Env"
+                script {
+                    def manifest = readManifestFile('chat.yml')
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('NAMESPACE', "test")
+                    manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
+                    writeFile file: 'chat.yml', text: manifest
+                }
                 step([
                     $class: 'KubernetesEngineBuilder',
                     projectId: 'apiservices-384122',
