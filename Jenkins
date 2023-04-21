@@ -41,11 +41,6 @@ pipeline {
                     manifestPattern: 'chat.yml'
                 ])
             }
-        post {
-                always {
-                    input "Do you want to deploy to test environment?", ok: 'Proceed', submitter: 'user'
-                }
-            }
         }
         stage('Deploy to Test Environment') {
             when {
@@ -69,12 +64,6 @@ pipeline {
                     manifestPattern: 'chat.yml'
                 ])
             }
-
-        post {
-                always {
-                    input "Do you want to deploy to prod environment?", ok: 'Proceed', submitter: 'user'
-                }
-            }
         }
         stage('Deploy to Prod Environment') {
             when {
@@ -86,7 +75,7 @@ pipeline {
                 script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "test")
+                    manifest = manifest.replaceAll('NAMESPACE', "prod")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
