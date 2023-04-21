@@ -92,9 +92,10 @@ pipeline {
                     }
                 }
                 script {
+                    NAME = "dev"
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', prod)
+                    manifest = manifest.replaceAll('NAMESPACE', "${NAME}")
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
                     writeFile file: 'chat.yml', text: manifest
                 }
