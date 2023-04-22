@@ -27,6 +27,11 @@ spec:
               secretKeyRef:
                 name: openai-sc
                 key: openai-sc
+          - name: FIREBASE_SERVICE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: service-key
+                key: serviceAccountKey.json
         ports:
         - containerPort: 5001
 
