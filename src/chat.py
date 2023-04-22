@@ -1,13 +1,12 @@
+
 import datetime
 import os
 
 from flask import Flask, request, jsonify
-from prometheus_client import Counter, Histogram, make_wsgi_app
 import openai
 from google.cloud import firestore
 import firebase_admin
 from firebase_admin import credentials
-from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 
 cred = credentials.Certificate("./serviceAccountKey.json")
@@ -18,31 +17,13 @@ app = Flask(__name__)
 # Load OpenAI API ke to API
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
+
 # Initialize Firestore client with explicit project ID
 project_id = "apiservices-384019"
 db = firestore.Client(project=project_id)
 
-# Define Prometheus metrics
-REQUEST_COUNT = Counter('request_count', 'The total number of HTTP requests')
-REQUEST_LATENCY = Histogram('request_latency_seconds', 'The latency of HTTP requests')
-
-# Define Prometheus middleware
-def metrics_middleware(request, response):
-    # Count the HTTP requests
-    REQUEST_COUNT.labels(request.method, request.path).inc()
-
-    # Measure the latency of HTTP requests
-    start_time = time.time()
-    def _record_latency(response):
-        resp_time = time.time() - start_time
-        REQUEST_LATENCY.labels(request.method, request.path, response.status_code).observe(resp_time)
-    response.call_on_close(_record_latency)
-
-# Add the Prometheus middleware to the application middleware stack
-app.wsgi_app = DispatcherMiddleware(app.wsgi_app, { '/metrics': make_wsgi_app() })
 
 @app.route('/')
-@metrics_middleware
 def chat():
     # Save service name, status, and timestamp to Firestore
     service_ref = db.collection('Services').document('ChatService_Status')
@@ -75,3 +56,4 @@ def chat():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
+
