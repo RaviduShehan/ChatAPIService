@@ -35,7 +35,7 @@ openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
 # Initialize Firestore client with explicit project ID
-project_id = "apiservices-384019"
+project_id = "apiservices-384122"
 db = firestore.Client(project=project_id)
 
 
