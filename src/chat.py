@@ -72,12 +72,12 @@ def chat():
         service_ref.update({'status': 'Error'})
         return jsonify(error=str(e)), 500
 
-@app.route('/metrics')
+@app.route('/metrics', methods=['POST'])
 def request_count():
-    res =[]
-    for k,v in graph.items():
+    res = []
+    for k, v in graph.items():
         res.append(prometheus_client.generate_latest(v))
-    return Response(res,mimetypes="text/plain")
+    return Response(res, mimetype="text/plain")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
