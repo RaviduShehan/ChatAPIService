@@ -12,6 +12,7 @@ from firebase_admin import credentials
 
 # Read Firebase service key from environment variable
 service_key_str = os.environ.get('FIREBASE_SERVICE_KEY')
+print(service_key_str)
 # Create a temporary file with the contents of the service key
 with tempfile.NamedTemporaryFile(mode='w', delete=False) as service_key_file:
     service_key_file.write(service_key_str)
