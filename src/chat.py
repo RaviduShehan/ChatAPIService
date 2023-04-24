@@ -20,9 +20,9 @@ graph['c'] = Counter('Python_request_operations_total', 'The total number of pro
 graph['h'] = Histogram('Python_request_duration_seconds','Histogram for the duration in seconds.', buckets=(1,2,5,6,10,_INF))
 
 
-# cred = credentials.Certificate("./serviceAccountKey.json")
-# firebase_admin.initialize_app(cred)
-# database = os.environ.get('FIREBASE_DATABASE_COLLECTION')
+cred = credentials.Certificate("./serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+database = os.environ.get('FIREBASE_DATABASE_COLLECTION')
 app = Flask(__name__)
 
 # Load OpenAI API ke to API
@@ -30,8 +30,8 @@ openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
 # Initialize Firestore client with explicit project ID
-# project_id = "apiservices-384019"
-# db = firestore.Client(project=project_id)
+project_id = "apiservices-384019"
+db = firestore.Client(project=project_id)
 
 
 @app.route('/')
@@ -42,21 +42,21 @@ def chat():
     time.sleep(0.600)
 
     # Save service name, status, and timestamp to Firestore
-    # service_ref = db.collection(database).document('ChatService_Status')
+    service_ref = db.collection(database).document('ChatService_Status')
     print("Service Started.....")
     service_data = {
         'service_name': 'Chat',
         'status': 'Starting',
         'timestamp': datetime.datetime.now()
     }
-    # service_ref.set(service_data)
+    service_ref.set(service_data)
     prompt = request.args.get('prompt')
     if not prompt:
-        # service_ref.update({'status': 'Empty Prompt'})
+        service_ref.update({'status': 'Empty Prompt'})
         return jsonify(error="Prompt parameter is missing"), 400
     end = time.time()
     graph['h'].observe(end - start)
-    # service_ref.update({'status': 'Running'})
+    service_ref.update({'status': 'Running'})
     try:
         response = openai.Completion.create(
             engine="davinci",
@@ -69,7 +69,7 @@ def chat():
         return jsonify(response=response.choices[0].text.strip())
     except Exception as e:
         # Update service status to 'error' if an exception occurs
-        # service_ref.update({'status': 'Error'})
+        service_ref.update({'status': 'Error'})
         return jsonify(error=str(e)), 500
 
 @app.route('/metrics', methods=['POST'])
