@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-               sh 'python tests/test_chat.py'
+               sh 'python test_chat.py'
             }
         }
         stage('Build Docker Image') {

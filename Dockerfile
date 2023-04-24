@@ -3,6 +3,7 @@ WORKDIR /ChatApp
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY serviceAccountKey.json .
+COPY tests/test_chat.py .
 COPY src src
 # Set environment variables for Firestore connection
 ENV GOOGLE_APPLICATION_CREDENTIALS="/ChatApp/serviceAccountKey.json"
