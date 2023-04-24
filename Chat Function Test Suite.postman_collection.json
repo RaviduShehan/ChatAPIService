@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "74a62c80-3a90-4c1d-a0ba-1e44d680d818",
+		"name": "Chat Function Test Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25119759"
+	},
+	"item": [
+		{
+			"name": "Test Chat Missing Prompt parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Prompt parameter is missing\", function () {\r",
+							"    pm.expect(pm.response.json()).to.deep.equal({\r",
+							"        \"error\": \"Prompt parameter is missing\"\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.132.224.27/chat/",
+					"protocol": "http",
+					"host": [
+						"34",
+						"132",
+						"224",
+						"27"
+					],
+					"path": [
+						"chat",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sucessful response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is a string\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('response').that.is.a('string');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.132.224.27/chat?prompt=Hello%2C%20how%20are%20you%3F",
+					"protocol": "http",
+					"host": [
+						"34",
+						"132",
+						"224",
+						"27"
+					],
+					"path": [
+						"chat"
+					],
+					"query": [
+						{
+							"key": "prompt",
+							"value": "Hello%2C%20how%20are%20you%3F"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
