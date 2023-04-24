@@ -11,7 +11,10 @@ pipeline {
             }
         }
         stage('Run Tests') {
-          sh 'pytest'
+        step{
+                  sh 'pytest'
+        }
+
         }
 
         stage('Build Docker Image') {
