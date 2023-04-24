@@ -5,19 +5,18 @@ pipeline {
         dockerImage = null
     }
     stages {
-        stage('Build') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
-            }
-        }
-        stage('Run Postman Test Suite') {
+         stage('Run Postman Test Suite') {
             steps {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
                 sh 'npm install -g newman'
                 sh 'newman run chatservicetest.json'
             }
-}
-
+        }
+        stage('Build') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
