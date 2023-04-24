@@ -7,9 +7,9 @@ pipeline {
     stages {
          stage('Run Postman Test Suite') {
             steps {
-               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]], dir: 'chatservice')
                 sh 'npm install -g newman'
-                sh 'newman run chatservicetest.json'
+                sh 'newman run chatservice/chatservicetest.json'
             }
         }
         stage('Build') {
