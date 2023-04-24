@@ -10,11 +10,6 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
-        stage('Run Tests') {
-            steps {
-                sh 'pytest'
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {

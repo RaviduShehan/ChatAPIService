@@ -4,7 +4,7 @@ import pytest
 import json
 import config
 import sys
-sys.path.append('/src')
+sys.path.append('../src')
 from src.chat import app
 
 
