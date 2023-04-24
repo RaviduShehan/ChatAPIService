@@ -22,7 +22,7 @@ graph['h'] = Histogram('Python_request_duration_seconds','Histogram for the dura
 
 cred = credentials.Certificate("./serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
-database = 'Services'
+database = os.environ.get('FIREBASE_DATABASE_COLLECTION')
 app = Flask(__name__)
 
 # Load OpenAI API ke to API

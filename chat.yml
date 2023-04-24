@@ -32,6 +32,8 @@ spec:
               secretKeyRef:
                 name: service-key
                 key: serviceAccountKey.json
+          - name: FIREBASE_DATABASE_COLLECTION
+            value: NAMESPACE-env
         ports:
         - containerPort: 5001
 
