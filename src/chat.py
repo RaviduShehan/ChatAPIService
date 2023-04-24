@@ -22,7 +22,7 @@ graph['h'] = Histogram('Python_request_duration_seconds','Histogram for the dura
 
 cred = credentials.Certificate("./serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
-
+database = 'Services'
 app = Flask(__name__)
 
 # Load OpenAI API ke to API
@@ -42,7 +42,7 @@ def chat():
     time.sleep(0.600)
 
     # Save service name, status, and timestamp to Firestore
-    service_ref = db.collection('Services').document('ChatService_Status')
+    service_ref = db.collection(database).document('ChatService_Status')
     print("Service Started.....")
     service_data = {
         'service_name': 'Chat',
