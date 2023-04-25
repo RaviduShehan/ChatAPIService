@@ -10,12 +10,6 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
-        stage('Check File Exists') {
-          steps {
-            sh 'ls -l chat.py'
-          }
-        }
-
          stage('Run Postman Test Suite') {
             steps {
                 sh 'npm install -g newman'
