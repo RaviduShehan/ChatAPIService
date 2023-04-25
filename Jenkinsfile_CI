@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Check File Exists') {
           steps {
-            sh 'ls -l /chatservicetest.json'
+            sh 'ls -l chat.py'
           }
         }
 
