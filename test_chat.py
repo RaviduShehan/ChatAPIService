@@ -1,16 +1,17 @@
-import os
-import tempfile
+from flask import Flask
 import pytest
-import sys
 
-from flask import app
+from src.chat import app
 
+import os
+import requests
 
+def test_app():
+    app_url = "http://34.132.224.27"
+    response = requests.get(f'{app_url}/chat')
+    assert response.status_code == 200
+    assert 'expected-response' in response.text
 
-
-def test_chat_invalid_prompt(client):
-    response = client.get('/')
-    assert response.status_code == 400
 
 
 # def test_chat_valid_prompt(client):
