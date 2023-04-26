@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        git "Git"
-    }
     environment {
         dockerImageName = "shehan97105/chatapiservice:${GIT_COMMIT}"
         dockerImage = null
