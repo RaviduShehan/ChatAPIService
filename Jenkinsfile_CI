@@ -17,7 +17,7 @@ pipeline {
         }
          stage('Run Postman Test Suite') {
             steps {
-                bat 'C:\Users\Ravidu\AppData\Roaming\npm\newman run chatservicetest.json'
+                bat 'C:\\Users\\Ravidu\\AppData\\Roaming\\npm\\newman run chatservicetest.json'
             }
         }
         stage('Build Docker Image') {
