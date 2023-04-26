@@ -10,12 +10,6 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
-         stage('Run Postman Test Suite') {
-            steps {
-                sh 'echo "Hello World"'
-
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
