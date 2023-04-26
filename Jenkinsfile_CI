@@ -12,6 +12,7 @@ pipeline {
         }
          stage('Run Postman Test Suite') {
             steps {
+                bat 'pip install pytest'
                 bat 'pytest'
             }
         }
