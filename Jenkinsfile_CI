@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                 sh 'echo "Hello, world!"'
+                 bat 'echo "Hello, world!"'
 
                 script {
                     dockerImage = docker.build dockerImageName
