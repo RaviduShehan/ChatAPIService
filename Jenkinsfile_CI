@@ -10,10 +10,14 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
+         stage('Run Postman Test Suite') {
+            steps {
+                bat 'npm install -g newman'
+                bat 'newman run chatservicetest.json'
+            }
+        }
         stage('Build Docker Image') {
             steps {
-                 bat 'echo "Hello, world!"'
-
                 script {
                     dockerImage = docker.build dockerImageName
                 }
