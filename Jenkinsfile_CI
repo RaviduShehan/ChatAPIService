@@ -10,7 +10,7 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RaviduShehan/ChatAPIService']]])
             }
         }
-        stage('Install Dependencies') {
+        stage('Install Dependencies for test') {
             steps {
                 bat 'npm install -g newman'
             }
