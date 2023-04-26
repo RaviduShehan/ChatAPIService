@@ -16,7 +16,7 @@ pipeline {
          stage('Run Postman Test Suite') {
             steps {
                 sh 'npm install -g newman'
-                sh 'newman run https://api.postman.com/collections/25119759-74a62c80-3a90-4c1d-a0ba-1e44d680d818?access_key=PMAT-01GYWRSWXE1S68A4GV6AH0E8TY'
+                sh 'newman run chatservicetest.json'
             }
         }
         stage('Build Docker Image') {
