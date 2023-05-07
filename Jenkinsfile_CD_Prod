@@ -1,0 +1,45 @@
+def readManifestFile(file) {
+    return readFile(file).trim()
+}
+
+pipeline {
+    agent any
+    environment {
+        DOCKERIMAGE = "shehan97105/chatapiservice:${GIT_COMMIT}"
+        kubeconfigId = "${params.KUBECONFIG_ID}"
+
+        gkeClusterName = "openai-api-cluster"
+        gkeZone = "us-central1-c"
+        gkeCredentialsId = "apiservicesauth"
+        DEPLOYMENT_ID = "chatapi"
+    }
+    stages{
+        stage('Get docker Image'){
+            steps {
+                script {
+                    echo "Docker image name: ${DOCKERIMAGE}"
+                }
+            }
+        }
+       stage('Deploy to Prod Environment') {
+            steps {
+                script {
+                    def manifest = readManifestFile('chat.yml')
+                    manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
+                    manifest = manifest.replaceAll('NAMESPACE', "prod")
+                    manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
+                    writeFile file: 'chatprod.yml', text: manifest
+
+                }
+                step([
+                    $class: 'KubernetesEngineBuilder',
+                    projectId: 'apiservices-384122',
+                    credentialsId: gkeCredentialsId,
+                    clusterName: gkeClusterName,
+                    location: gkeZone,
+                    manifestPattern: 'chatprod.yml'
+                ])
+       }
+    }
+ }
+}
