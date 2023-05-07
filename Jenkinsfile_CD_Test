@@ -21,15 +21,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Dev Environment') {
+        stage('Deploy to Test Environment') {
             steps {
-                echo "Deploy to Dev Env"
-                 script {
+                script {
                     def manifest = readManifestFile('chat.yml')
                     manifest = manifest.replaceAll('DEPLOYMENT_NAME', "${DEPLOYMENT_ID}")
-                    manifest = manifest.replaceAll('NAMESPACE', "dev")
+                    manifest = manifest.replaceAll('NAMESPACE',"test" )
                     manifest = manifest.replaceAll('dockerImageName',"${DOCKERIMAGE}")
-                    writeFile file: 'chatdev.yml', text: manifest
+                    writeFile file: 'chattest.yml', text: manifest
                 }
                 step([
                     $class: 'KubernetesEngineBuilder',
@@ -37,18 +36,9 @@ pipeline {
                     credentialsId: gkeCredentialsId,
                     clusterName: gkeClusterName,
                     location: gkeZone,
-                    manifestPattern: 'chatdev.yml'
+                    manifestPattern: 'chattest.yml'
                 ])
             }
         }
-        stage('Pass the DockerImage name') {
-            steps {
-                script {
-                        string(name: 'DOCKER_IMAGE_NAME', value: DOCKERIMAGE),
-                        string(name: 'KUBECONFIG_ID', value: 'kubeconfigId')
-                }
-            }
-        }
-
-}
+    }
 }
