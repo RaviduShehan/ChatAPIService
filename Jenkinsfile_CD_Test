@@ -5,7 +5,7 @@ def readManifestFile(file) {
 pipeline {
     agent any
     environment {
-        DOCKERIMAGE = "${params.DOCKER_IMAGE_NAME}"
+        DOCKERIMAGE = "shehan97105/chatapiservice:${GIT_COMMIT}"
         kubeconfigId = "${params.KUBECONFIG_ID}"
 
         gkeClusterName = "openai-api-cluster"
