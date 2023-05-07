@@ -44,7 +44,7 @@ pipeline {
         stage('Pass the DockerImage name') {
             steps {
                 script {
-                        string(name: 'DOCKER_IMAGE_NAME', value: DOCKERIMAGE),
+                        string(name: 'DOCKER_IMAGE_NAME', value: DOCKERIMAGE)
                         string(name: 'KUBECONFIG_ID', value: 'kubeconfigId')
                 }
             }
